@@ -17,5 +17,16 @@ es5-shim@4.6.15                # ECMAScript 5 compatibility for older browsers
 ecmascript@0.8.1              # Enable ECMAScript2015+ syntax in app code
 shell-server@0.2.4            # Server-side component of the `meteor shell` command
 
-autopublish@1.0.7             # Publish all data to the clients (for prototyping)
-insecure@1.0.7                # Allow all DB writes from clients (for prototyping)
+msavin:mongol
+msavin:jetsetter
+dsyko:jquery-ui-touch-punch
+mizzao:jquery-ui
+fortawesome:fontawesome
+accounts-ui
+accounts-password
+stubborncoder:bootstrap-material-datepicker
+kadira:flow-router
+aldeed:simple-schema
+aldeed:collection2
+react-meteor-data
+aido179:bootstrap-material-datepicker
