@@ -6,6 +6,19 @@
     width: 100%;
 }
 
+#wellLoginForms {
+    text-align: center;
+    margin-left: 20%;
+    margin-top: 10%;
+    display: grid;
+    width: 800px;
+    left: 10%;
+}
+
+#formLogin {
+    left: 30%;
+}
+
 #buttonPulse {
     position: absolute;
     left: 90%;

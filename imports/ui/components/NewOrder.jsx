@@ -5,7 +5,7 @@ import {render} from 'react-dom';
 import {createContainer} from 'meteor/react-meteor-data';
 
 import {Orders} from '../../api/Orders.js'
-
+Meteor.subscribe('orders');
 export default class NewOrder extends Component {
     constructor(props) {
         super(props);
@@ -60,10 +60,27 @@ export default class NewOrder extends Component {
         let inputProduct = this.state.inputProduct;
         let inputProvider = this.state.inputProvider;
         let inputTypeOrder = this.state.inputTypeOrder;
-        let inputIDOrder = this.state.inputIDOrder;
         let datainput = document.getElementById("inputDataOrderExecution");
         //let inputDataOfExecution = this.state.inputDataOfExecution;
         let inputCommentField = this.state.inputCommentField;
+
+        var options = {
+            year: 'numeric',
+            month: 'numeric',
+            day: 'numeric'
+        };
+        docDate = new Date();
+        newDate = docDate.toLocaleString("ru", options);
+        let firstChar = inputTypeOrder.substring(0, 1);
+        let secondChar = newDate.substring(8, 10);
+        let thirdChar = newDate.substring(3, 5);
+        let fourChar = newDate.substring(0, 2);
+        let contsdocs = Orders
+            .find()
+            .count()
+        curentPositionOfOrder = contsdocs + 1;
+        odorederfield = firstChar + "-" + secondChar + thirdChar + fourChar + curentPositionOfOrder;
+        let inputIDOrder = odorederfield;
 
         Orders.insert({
             createdAt: new Date(),
@@ -76,7 +93,11 @@ export default class NewOrder extends Component {
             product: inputProduct,
             provider: inputProvider,
             comment: inputCommentField,
-            date_order_execution:datainput.value
+            date_order_execution: datainput.value
+        }, function (error, result) {
+            if (error) {
+                alert(error)
+            }
         });
         FlowRouter.go("/");
     }
@@ -117,9 +138,9 @@ export default class NewOrder extends Component {
         this.setState({inputCommentField: evt.target.value});
     }
     datapickerfocus(evt) {
-        $('#inputDataOrderExecution').bootstrapMaterialDatePicker({ weekStart : 0, time: false });
+        $('#inputDataOrderExecution').bootstrapMaterialDatePicker({weekStart: 0, time: false});
     }
-    cancelButton(){
+    cancelButton() {
         FlowRouter.go("/");
     }
     render() {
@@ -211,6 +232,7 @@ export default class NewOrder extends Component {
 
                                 <div className="col-md-10">
                                     <select id="select111" className="form-control" onChange={this.updateTypeOrder}>
+                                        <option>None</option>
                                         <option>Wholesale</option>
                                         <option>Retail</option>
                                     </select>
@@ -228,12 +250,13 @@ export default class NewOrder extends Component {
                                 </div>
                             </div>
                             <div className="form-group label-floating">
-                                <label className="col-md-2 control-label" htmlFor="inputIdOrder">ID oreder</label>
+                                <label className="col-md-2 control-label" htmlFor="disabledInputIDOreder">ID oreder</label>
                                 <div className="col-md-10">
                                     <input
+                                        disabled="disabled"
                                         type="text"
                                         className="form-control"
-                                        id="inputIdOrder"
+                                        id="disabledInputIDOreder"
                                         onChange={this.updateIDOrder}/>
                                 </div>
                             </div>
@@ -252,7 +275,7 @@ export default class NewOrder extends Component {
 
                             <div className="form-group">
                                 <div className="col-md-10 col-md-offset-2">
-                                    
+
                                     <input
                                         type="button"
                                         className="btn btn-default"
