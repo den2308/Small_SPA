@@ -30,3 +30,5 @@ aldeed:simple-schema
 aldeed:collection2
 react-meteor-data
 aido179:bootstrap-material-datepicker
+momentjs:moment
+session

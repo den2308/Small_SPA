@@ -7,6 +7,7 @@ import NewOrder from '../../ui/components/NewOrder.jsx'
 import OrderList from '../../ui/components/OrderList.jsx'
 import Login from '../../ui/components/Login.jsx'
 import Signup from '../../ui/components/Signup.jsx'
+import EditOrder from '../../ui/components/EditOrder.jsx'
 
 FlowRouter.route('/', {
   name: 'homepage',
@@ -20,30 +21,31 @@ FlowRouter.route('/', {
   }
 });
 
-FlowRouter
-.route('/neworder', {
-name: 'new order',
-action() {
-  mount(NewOrder, {})
-}
+FlowRouter.route('/neworder', {
+  name: 'new order',
+  action() {
+    mount(NewOrder, {})
+  }
 });
 
-FlowRouter
-.route('/orderlist', {
-name: 'order list',
-action() {
-  mount(OrderList, {})
-}
+FlowRouter.route('/orderlist', {
+  name: 'order list',
+  action() {
+    mount(OrderList, {})
+  }
 });
-FlowRouter
-.route('/login', {
-action() {
-  mount(Login, {});
-}
+FlowRouter.route('/editOrder', {
+  action() {
+    mount(EditOrder, {});
+  }
 });
-FlowRouter
-.route('/signup', {
-action() {
-  mount(Signup, {});
-}
+FlowRouter.route('/login', {
+  action() {
+    mount(Login, {});
+  }
+});
+FlowRouter.route('/signup', {
+  action() {
+    mount(Signup, {});
+  }
 });
