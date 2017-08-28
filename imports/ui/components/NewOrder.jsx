@@ -83,6 +83,7 @@ export default class NewOrder extends Component {
         let inputIDOrder = odorederfield;
 
         Orders.insert({
+            email:currentEmail,
             createdAt: new Date(),
             id_order: inputIDOrder,
             customer: inputCustomer,

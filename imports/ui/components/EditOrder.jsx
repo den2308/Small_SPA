@@ -9,6 +9,33 @@ Meteor.subscribe('orders');
 export default class EditOrder extends Component {
     constructor(props) {
         super(props);
+        orderIDForSearch = Session.get("orderID");
+        orderDOC = Orders.findOne({_id: orderIDForSearch});
+        console.log(orderDOC)
+        if (orderDOC) {
+            var options = {
+                year: 'numeric',
+                month: 'numeric',
+                day: 'numeric'
+            };
+            orderforEditForm = orderDOC
+                .date_order_execution
+                .toLocaleString("ru", options);
+            this.state = {
+                emailValue: orderDOC.email,
+                customerValue: orderDOC.customer,
+                firstNameValue: orderDOC.first_name,
+                secondNameValue: orderDOC.second_name,
+                phoneNumberValue: orderDOC.phone_number,
+                productValue: orderDOC.product,
+                providerValue: orderDOC.provider,
+                orderTypeValue: orderDOC.order_type,
+                dateOfExecutionValue: orderforEditForm,
+                idOrderValue: orderDOC.id_order,
+                commentValue: orderDOC.comment
+            }
+        }
+
         //this.state={inputfield: "no value"};
         this.handleClick = this
             .handleClick
@@ -50,19 +77,19 @@ export default class EditOrder extends Component {
     }
 
     handleClick() {
-        let inputCustomer = this.state.inputCustomer;
-        let currentEmail = this.state.inputEmail;
+        let inputCustomer = this.state.customerValue;
+        let currentEmail = this.state.emailValue;
 
-        let inputFirstName = this.state.inputFirstName;
-        let inputSecondName = this.state.inputSecondName;
-        let inputPhoneNumber = this.state.inputPhoneNumber;
+        let inputFirstName = this.state.firstNameValue;
+        let inputSecondName = this.state.secondNameValue;
+        let inputPhoneNumber = this.state.phoneNumberValue;
 
-        let inputProduct = this.state.inputProduct;
-        let inputProvider = this.state.inputProvider;
-        let inputTypeOrder = this.state.inputTypeOrder;
+        let inputProduct = this.state.productValue;
+        let inputProvider = this.state.providerValue;
+        let inputTypeOrder = this.state.orderTypeValue;
         let datainput = document.getElementById("inputDataOrderExecution");
         //let inputDataOfExecution = this.state.inputDataOfExecution;
-        let inputCommentField = this.state.inputCommentField;
+        let inputCommentField = this.state.commentValue;
 
         var options = {
             year: 'numeric',
@@ -81,8 +108,7 @@ export default class EditOrder extends Component {
         curentPositionOfOrder = contsdocs + 1;
         odorederfield = firstChar + "-" + secondChar + thirdChar + fourChar + curentPositionOfOrder;
         let inputIDOrder = odorederfield;
-
-        Orders.insert({
+        Orders.update(Session.get("orderID"), {
             createdAt: new Date(),
             id_order: inputIDOrder,
             customer: inputCustomer,
@@ -94,48 +120,44 @@ export default class EditOrder extends Component {
             provider: inputProvider,
             comment: inputCommentField,
             date_order_execution: datainput.value
-        }, function (error, result) {
-            if (error) {
-                alert(error)
-            }
-        });
+        })
+
         FlowRouter.go("/");
     }
 
     updateEmailField(evt) {
-        this.setState({inputEmail: evt.target.value});
+        this.setState({emailValue: evt.target.value});
     }
     updateCustomerField(evt) {
-        this.setState({inputCustomer: evt.target.value});
+        this.setState({customerValue: evt.target.value});
     }
     updateFirstName(evt) {
-        this.setState({inputFirstName: evt.target.value});
+        this.setState({firstNameValue: evt.target.value});
     }
     updateSecondName(evt) {
-        this.setState({inputSecondName: evt.target.value});
+        this.setState({secondNameValue: evt.target.value});
     }
     updatePhoneNumber(evt) {
-        this.setState({inputPhoneNumber: evt.target.value});
+        this.setState({phoneNumberValue: evt.target.value});
     }
     updateProduct(evt) {
-        this.setState({inputProduct: evt.target.value});
+        this.setState({productValue: evt.target.value});
     }
 
     updateProviderField(evt) {
-        this.setState({inputProvider: evt.target.value});
+        this.setState({providerValue: evt.target.value});
     }
     updateTypeOrder(evt) {
-        this.setState({inputTypeOrder: evt.target.value});
+        this.setState({orderTypeValue: evt.target.value});
     }
     updateIDOrder(evt) {
-        this.setState({inputIDOrder: evt.target.value});
+        this.setState({idOrderValue: evt.target.value});
     }
     updateDataOfExecution(evt) {
-        console.log(evt.target.value)
-        this.setState({inputDataOfExecution: evt.target.value});
+        this.setState({dateOfExecutionValue: evt.target.value});
     }
     updateCommentField(evt) {
-        this.setState({inputCommentField: evt.target.value});
+        this.setState({commentValue: evt.target.value});
     }
     datapickerfocus(evt) {
         $('#inputDataOrderExecution').bootstrapMaterialDatePicker({weekStart: 0, time: false});
@@ -146,7 +168,7 @@ export default class EditOrder extends Component {
     render() {
         return (
             <div className="container">
-                <h1>Add new order</h1>
+                <h1>Edit order</h1>
                 <div className="well">
                     <form className="form-horizontal" onSubmit={this.handleClick}>
                         <fieldset>
@@ -156,6 +178,7 @@ export default class EditOrder extends Component {
 
                                 <div className="col-md-10">
                                     <input
+                                        value={this.state.emailValue}
                                         onChange={this.updateEmailField}
                                         type="email"
                                         className="form-control"
@@ -168,6 +191,7 @@ export default class EditOrder extends Component {
                                 <label className="col-md-2 control-label" htmlFor="inputCustomer">Customer</label>
                                 <div className="col-md-10">
                                     <input
+                                        value={this.state.customerValue}
                                         type="text"
                                         className="form-control"
                                         id="inputCustomer"
@@ -178,6 +202,7 @@ export default class EditOrder extends Component {
                                 <label className="col-md-2 control-label" htmlFor="inputFirsName">First Name</label>
                                 <div className="col-md-10">
                                     <input
+                                        value={this.state.firstNameValue}
                                         type="text"
                                         className="form-control"
                                         id="inputFirsName"
@@ -188,6 +213,7 @@ export default class EditOrder extends Component {
                                 <label className="col-md-2 control-label" htmlFor="inputSecondName">Second Name</label>
                                 <div className="col-md-10">
                                     <input
+                                        value={this.state.secondNameValue}
                                         type="text"
                                         className="form-control"
                                         id="inputSecondName"
@@ -198,7 +224,8 @@ export default class EditOrder extends Component {
                                 <label className="col-md-2 control-label" htmlFor="inputPhoneNumber">Phone Number</label>
                                 <div className="col-md-10">
                                     <input
-                                        type="text"
+                                        value={this.state.phoneNumberValue}
+                                        type="number"
                                         className="form-control"
                                         id="inputPhoneNumber"
                                         onChange={this.updatePhoneNumber}/>
@@ -210,6 +237,7 @@ export default class EditOrder extends Component {
                                 <label className="col-md-2 control-label" htmlFor="inputProduct">Product</label>
                                 <div className="col-md-10">
                                     <input
+                                        value={this.state.productValue}
                                         type="text"
                                         className="form-control"
                                         id="inputProduct"
@@ -220,6 +248,7 @@ export default class EditOrder extends Component {
                                 <label className="col-md-2 control-label" htmlFor="inputProvider">Provider</label>
                                 <div className="col-md-10">
                                     <input
+                                        value={this.state.providerValue}
                                         type="text"
                                         className="form-control"
                                         id="inputProvider"
@@ -231,7 +260,11 @@ export default class EditOrder extends Component {
                                 <label className="col-md-2 control-label" htmlFor="select111">Select</label>
 
                                 <div className="col-md-10">
-                                    <select id="select111" className="form-control" onChange={this.updateTypeOrder}>
+                                    <select
+                                        id="select111"
+                                        value={this.state.orderTypeValue}
+                                        className="form-control"
+                                        onChange={this.updateTypeOrder}>
                                         <option>None</option>
                                         <option>Wholesale</option>
                                         <option>Retail</option>
@@ -242,6 +275,7 @@ export default class EditOrder extends Component {
                                 <label className="col-md-2 control-label" htmlFor="inputDataOrderExecution">Date of order execution</label>
                                 <div className="col-md-10">
                                     <input
+                                        value={this.state.dateOfExecutionValue}
                                         type="text"
                                         className="form-control"
                                         id="inputDataOrderExecution"
@@ -253,6 +287,7 @@ export default class EditOrder extends Component {
                                 <label className="col-md-2 control-label" htmlFor="disabledInputIDOreder">ID oreder</label>
                                 <div className="col-md-10">
                                     <input
+                                        value={this.state.idOrderValue}
                                         disabled="disabled"
                                         type="text"
                                         className="form-control"
@@ -265,6 +300,7 @@ export default class EditOrder extends Component {
                                 <label className="col-md-2 control-label" htmlFor="textArea">Comment</label>
                                 <div className="col-md-10">
                                     <textarea
+                                        value={this.state.commentValue}
                                         className="form-control"
                                         rows="3"
                                         id="textArea"

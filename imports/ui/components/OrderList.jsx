@@ -9,7 +9,7 @@ export class OrderList extends Component {
         return this
             .props
             .ordersdocs
-            .map((ordersdocs) => (<Order key={ordersdocs._id} ordersdocs={ordersdocs}/>));
+            .map((ordersdocs) => (<Order key={ordersdocs._id} id={ordersdocs._id} ordersdocs={ordersdocs}/>));
     }
     render() {
         return (

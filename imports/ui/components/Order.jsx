@@ -15,13 +15,9 @@ export default class Order extends Component {
         let today = moment();
         let leftOneDay = moment(today);
         currentDay = leftOneDay._d.toLocaleString("ru", options)
-        console.log(currentDay);
-        console.log(documentOrderDate);
         if (currentDay <= documentOrderDate) {
-            console.log("true")
             return <span className="label label-primary">Confirm</span >
         } else { 
-            console.log("false")
             return <span className="label label-warning">Expired</span>
     }
 }
@@ -32,29 +28,20 @@ renderEditButton() {
         day: 'numeric'
     };
     let dateOfOdred = this.props.ordersdocs.date_order_execution;
-    let documentOrderDate = dateOfOdred.toLocaleString("ru", options);
-    let today = moment();
-    let leftOneDay = moment(today).add(-1, 'days');
-    let leftTwoDay = moment(today).add(-2, 'days');
-    let leftTreeDay = moment(today).add(-3, 'days');
-
-    if (documentOrderDate == leftOneDay._d.toLocaleString("ru", options)) {
-        return <a href="" className="btn btn-primary">Edit</a>
-    } else if (documentOrderDate == leftTwoDay._d.toLocaleString("ru", options)) {
-        return <a href="" className="btn btn-primary">Edit</a>
-    } else if (documentOrderDate == leftTreeDay._d.toLocaleString("ru", options)) {
-        return <a href="" className="btn btn-primary">Edit</a>
-    }
-    return <input
-        type="button"
-        className="btn btn-primary"
-        value="Submit"
-        id="submitbtn"
-        onClick={this.clickEditButton}/>
+    let someDate = moment(dateOfOdred).add(-3, 'days');
+    let rightDate = someDate._d.toLocaleString("ru", options);
+    let today = new Date();
+    let currentDay = today.toLocaleString("ru", options);
+    if (currentDay <= rightDate) {
+        return <a href="" className="btn btn-primary" id ={this.props.ordersdocs._id} onClick = {this.clickEditButton}>Edit</a>
+    }   
+   
 }
 clickEditButton() {
-    //console.log(this)
-    Session.set("orderID", this.props.ordersdocs._id);
+    console.log(document.activeElement.id);
+    Session.set("orderID", null);
+    Session.set("orderID", document.activeElement.id);
+    FlowRouter.go("/editOrder");
 }
 renderCreateAt() {
     var options = {
