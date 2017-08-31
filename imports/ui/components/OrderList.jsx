@@ -6,10 +6,10 @@ import {Orders} from '../../api/Orders.js'
 
 export class OrderList extends Component {
     renderOrders() {
-        return this
-            .props
-            .ordersdocs
-            .map((ordersdocs) => (<Order key={ordersdocs._id} id={ordersdocs._id} ordersdocs={ordersdocs}/>));
+            return this
+                .props
+                .ordersdocs
+                .map((ordersdocs) => (<Order key={ordersdocs._id} id={ordersdocs._id} ordersdocs={ordersdocs}/>));
     }
     render() {
         return (

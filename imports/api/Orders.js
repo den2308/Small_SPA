@@ -29,10 +29,12 @@ Schemas.Orders = new SimpleSchema({
         label: "First Name"
     },
     second_name: {
+        optional: true,
         type: String,
         label: "Second Name"
     },
     phone_number: {
+        optional: true,
         optional: true,
         type: Number,
         label: "Phone Number"
@@ -55,7 +57,6 @@ Schemas.Orders = new SimpleSchema({
         label: "Comment"
     },
     date_order_execution: {
-        optional: true,
         type: Date,
         label: "Date of order execution"
     }

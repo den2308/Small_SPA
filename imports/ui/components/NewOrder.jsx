@@ -81,26 +81,31 @@ export default class NewOrder extends Component {
         curentPositionOfOrder = contsdocs + 1;
         odorederfield = firstChar + "-" + secondChar + thirdChar + fourChar + curentPositionOfOrder;
         let inputIDOrder = odorederfield;
+        if (datainput.value) {
+            Orders
+                .insert({
+                    email: currentEmail,
+                    createdAt: new Date(),
+                    id_order: inputIDOrder,
+                    customer: inputCustomer,
+                    first_name: inputFirstName,
+                    second_name: inputSecondName,
+                    phone_number: inputPhoneNumber,
+                    order_type: inputTypeOrder,
+                    product: inputProduct,
+                    provider: inputProvider,
+                    comment: inputCommentField,
+                    date_order_execution: datainput.value
+                }, function (error, result) {
+                    if (error) {
+                        alert(error)
+                    }
+                });
+            FlowRouter.go("/");
+        } else {
+            Bert.alert('U must entered Date of execution', 'danger', 'growl-top-right');
+        }
 
-        Orders.insert({
-            email:currentEmail,
-            createdAt: new Date(),
-            id_order: inputIDOrder,
-            customer: inputCustomer,
-            first_name: inputFirstName,
-            second_name: inputSecondName,
-            phone_number: inputPhoneNumber,
-            order_type: inputTypeOrder,
-            product: inputProduct,
-            provider: inputProvider,
-            comment: inputCommentField,
-            date_order_execution: datainput.value
-        }, function (error, result) {
-            if (error) {
-                alert(error)
-            }
-        });
-        FlowRouter.go("/");
     }
 
     updateEmailField(evt) {

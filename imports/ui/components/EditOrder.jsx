@@ -11,7 +11,6 @@ export default class EditOrder extends Component {
         super(props);
         orderIDForSearch = Session.get("orderID");
         orderDOC = Orders.findOne({_id: orderIDForSearch});
-        console.log(orderDOC)
         if (orderDOC) {
             var options = {
                 year: 'numeric',
@@ -109,17 +108,19 @@ export default class EditOrder extends Component {
         odorederfield = firstChar + "-" + secondChar + thirdChar + fourChar + curentPositionOfOrder;
         let inputIDOrder = odorederfield;
         Orders.update(Session.get("orderID"), {
-            createdAt: new Date(),
-            id_order: inputIDOrder,
-            customer: inputCustomer,
-            first_name: inputFirstName,
-            second_name: inputSecondName,
-            phone_number: inputPhoneNumber,
-            order_type: inputTypeOrder,
-            product: inputProduct,
-            provider: inputProvider,
-            comment: inputCommentField,
-            date_order_execution: datainput.value
+            $set: {
+                createdAt: new Date(),
+                id_order: inputIDOrder,
+                customer: inputCustomer,
+                first_name: inputFirstName,
+                second_name: inputSecondName,
+                phone_number: inputPhoneNumber,
+                order_type: inputTypeOrder,
+                product: inputProduct,
+                provider: inputProvider,
+                comment: inputCommentField,
+                date_order_execution: datainput.value
+            }
         })
 
         FlowRouter.go("/");
@@ -178,7 +179,7 @@ export default class EditOrder extends Component {
 
                                 <div className="col-md-10">
                                     <input
-                                        value={this.state.emailValue}
+                                        defaultValue={this.state.emailValue}
                                         onChange={this.updateEmailField}
                                         type="email"
                                         className="form-control"
@@ -191,7 +192,7 @@ export default class EditOrder extends Component {
                                 <label className="col-md-2 control-label" htmlFor="inputCustomer">Customer</label>
                                 <div className="col-md-10">
                                     <input
-                                        value={this.state.customerValue}
+                                        defaultValue={this.state.customerValue}
                                         type="text"
                                         className="form-control"
                                         id="inputCustomer"
@@ -202,7 +203,7 @@ export default class EditOrder extends Component {
                                 <label className="col-md-2 control-label" htmlFor="inputFirsName">First Name</label>
                                 <div className="col-md-10">
                                     <input
-                                        value={this.state.firstNameValue}
+                                        defaultValue={this.state.firstNameValue}
                                         type="text"
                                         className="form-control"
                                         id="inputFirsName"
@@ -213,7 +214,7 @@ export default class EditOrder extends Component {
                                 <label className="col-md-2 control-label" htmlFor="inputSecondName">Second Name</label>
                                 <div className="col-md-10">
                                     <input
-                                        value={this.state.secondNameValue}
+                                        defaultValue={this.state.secondNameValue}
                                         type="text"
                                         className="form-control"
                                         id="inputSecondName"
@@ -224,7 +225,7 @@ export default class EditOrder extends Component {
                                 <label className="col-md-2 control-label" htmlFor="inputPhoneNumber">Phone Number</label>
                                 <div className="col-md-10">
                                     <input
-                                        value={this.state.phoneNumberValue}
+                                        defaultValue={this.state.phoneNumberValue}
                                         type="number"
                                         className="form-control"
                                         id="inputPhoneNumber"
@@ -237,7 +238,7 @@ export default class EditOrder extends Component {
                                 <label className="col-md-2 control-label" htmlFor="inputProduct">Product</label>
                                 <div className="col-md-10">
                                     <input
-                                        value={this.state.productValue}
+                                        defaultValue={this.state.productValue}
                                         type="text"
                                         className="form-control"
                                         id="inputProduct"
@@ -248,7 +249,7 @@ export default class EditOrder extends Component {
                                 <label className="col-md-2 control-label" htmlFor="inputProvider">Provider</label>
                                 <div className="col-md-10">
                                     <input
-                                        value={this.state.providerValue}
+                                        defaultValue={this.state.providerValue}
                                         type="text"
                                         className="form-control"
                                         id="inputProvider"
@@ -262,7 +263,7 @@ export default class EditOrder extends Component {
                                 <div className="col-md-10">
                                     <select
                                         id="select111"
-                                        value={this.state.orderTypeValue}
+                                        defaultValue={this.state.orderTypeValue}
                                         className="form-control"
                                         onChange={this.updateTypeOrder}>
                                         <option>None</option>
@@ -275,7 +276,7 @@ export default class EditOrder extends Component {
                                 <label className="col-md-2 control-label" htmlFor="inputDataOrderExecution">Date of order execution</label>
                                 <div className="col-md-10">
                                     <input
-                                        value={this.state.dateOfExecutionValue}
+                                        defaultValue={this.state.dateOfExecutionValue}
                                         type="text"
                                         className="form-control"
                                         id="inputDataOrderExecution"
@@ -287,7 +288,7 @@ export default class EditOrder extends Component {
                                 <label className="col-md-2 control-label" htmlFor="disabledInputIDOreder">ID oreder</label>
                                 <div className="col-md-10">
                                     <input
-                                        value={this.state.idOrderValue}
+                                        defaultValue={this.state.idOrderValue}
                                         disabled="disabled"
                                         type="text"
                                         className="form-control"
@@ -300,7 +301,7 @@ export default class EditOrder extends Component {
                                 <label className="col-md-2 control-label" htmlFor="textArea">Comment</label>
                                 <div className="col-md-10">
                                     <textarea
-                                        value={this.state.commentValue}
+                                        defaultValue={this.state.commentValue}
                                         className="form-control"
                                         rows="3"
                                         id="textArea"
